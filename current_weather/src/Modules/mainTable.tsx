@@ -1,5 +1,6 @@
 import {Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Card} from "@mui/material";
 import React from "react";
+import "./mainTable.css";
 
 interface MainTableProps {
   weather: any;
@@ -8,19 +9,20 @@ interface MainTableProps {
 
 const MainTable: React.FC<MainTableProps> = ({ weather, localDate }) => {
   return (
-    <Card sx={{ border: "5px solid lightgray", padding: "10px", marginTop: "20px" }}>
+    <Card sx={{ padding: "0px", marginTop: "20px",  backgroundColor: "lightgray" }}>
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead id="tableHeader">
             <TableRow>
-                <TableCell>Pais</TableCell>
-                <TableCell>Ciudad</TableCell>
-                <TableCell>Región</TableCell>
-                <TableCell>🕛 Día/Hora</TableCell>
-                <TableCell>🌡️ Máx</TableCell>
-                <TableCell>🌡️ Mín</TableCell>
-                <TableCell>🌤️ Estado</TableCell>
-                <TableCell>Vista</TableCell>
+                <TableCell id="tableTextHeader">Pais</TableCell>
+                <TableCell id="tableTextHeader">Ciudad</TableCell>
+                <TableCell id="tableTextHeader">Región</TableCell>
+                <TableCell id="tableTextHeader">🕛 Día/Hora</TableCell>
+                <TableCell id="tableTextHeader">🌡️ Temp Actual</TableCell>
+                <TableCell id="tableTextHeader">🌡️ Máx</TableCell>
+                <TableCell id="tableTextHeader">🌡️ Mín</TableCell>
+                <TableCell id="tableTextHeader">🌤️ Estado</TableCell>
+                <TableCell id="tableTextHeader">Vista</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -29,6 +31,7 @@ const MainTable: React.FC<MainTableProps> = ({ weather, localDate }) => {
                   <TableCell>{weather.location.name}</TableCell>
                   <TableCell>{weather.location.region}</TableCell>
                   <TableCell>{localDate}</TableCell>
+                  <TableCell>{weather.current.temp_c}°C</TableCell>
                   <TableCell>{weather.forecast.forecastday[0].day.maxtemp_c}°C</TableCell>
                   <TableCell>{weather.forecast.forecastday[0].day.mintemp_c}°C</TableCell>
                   <TableCell>{weather.current.condition.text}</TableCell>
