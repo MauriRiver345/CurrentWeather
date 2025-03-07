@@ -1,80 +1,74 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
-import "./assets/Modules/weatherForm.tsx";
-import WeatherForm from "./assets/Modules/weatherForm.tsx";
-import { Weather } from "./assets/Modules/weatherInterface.tsx";
-
+import WeatherForm from "./Modules/weatherForm.tsx";
+import { Weather } from "./Modules/weatherInterface.tsx";
+import MainTable from "./Modules/mainTable.tsx";
 
 function App() {
   const [weather, setWeather] = useState<Weather | null>(null);
-  const [localDate, setLocalDate] = useState<String | null>(null);
+  const [localDate, setLocalDate] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [city, setCity] = useState<string>("Aguascalientes"); // Ciudad por defecto
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchWeather = async () => {
+  const fetchWeather = async (cityName: string) => {
+    setLoading(true);
+    setError(null);
+
     try {
       const response = await axios.get(
         "http://api.weatherapi.com/v1/forecast.json",
         {
           params: {
             key: "6e4b28cf54744dc0a4e143637250603",
-            q: "Buenos Aires",
+            q: cityName, // Usamos el parámetro en lugar del estado
           },
         }
       );
-      
+
       const weatherData: Weather = response.data;
-      console.log(response.data);
       const date = new Date(weatherData.location.localtime);
-      const formattedDateTime = date.toLocaleString('es-ES', {
-        weekday: 'long',  // Día de la semana (Lunes)
-        year: 'numeric',  // Año completo (2025)
-        month: 'long',    // Mes completo (Abril)
-        day: 'numeric',   // Día del mes (03)
-        hour: '2-digit',  // Hora en 2 dígitos
-        minute: '2-digit', // Minutos en 2 dígitos
+      const formattedDateTime = date.toLocaleString("es-ES", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       });
 
       setWeather(weatherData);
       setLocalDate(formattedDateTime);
     } catch (error) {
-      setError("Error al obtener el clima");
+      setError("Ciudad no encontrada. Intenta con otra.");
+      setWeather(null);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Cargar el clima de la ciudad predeterminada al iniciar
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await Promise.all([fetchWeather()]); // Ejecutar ambas llamadas en paralelo
-      } catch (error) {
-        setError("Error al obtener datos");
-      }
-    };
-
-    fetchData();
-  }, []);
+    fetchWeather(city);
+  }, []); // Se ejecuta solo una vez al montar el componente
 
   return (
-    <div>
-      <h1>Información Actual</h1>
-
+    <div className="mainContent">
+      <div className="header">
+      <p className = "mainTitle">How is the weather in your dream city/country??</p>
+      <img id = "icon" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/c6023f30971807.563b2b13a55cc.gif" alt="Gif" />
+      </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
-
+      {loading && <p>Cargando clima...</p>}
       {weather ? (
         <div className="weather">
-          <h2>🌦️ Clima</h2>
-          <h3>🌐 Ciudad: {`${weather.location.name}, ${weather.location.region}, ${weather.location.country}`}</h3>
-          <p>🕒 Hora Local: {localDate}</p>
-          <p>🌡️ Temperatura: {weather.current.temp_c}°C</p>
-          <img id="weatherIcon" src={`https:${weather.current.condition.icon}`} alt="" />
-          <p>🌤️ Clima: {weather.current.condition.text}</p>
-          <p>🌤️ Max Temp: {weather.forecast.forecastday[0].day.maxtemp_c}</p>
-          <p>🌤️ Min Temp: {weather.forecast.forecastday[0].day.mintemp_c}</p>
-          <WeatherForm />
-          </div>
+          <MainTable weather={weather} localDate={localDate}></MainTable>
+        </div>
       ) : (
-        <p>Cargando clima...</p>
+        <p>Ingresa una ciudad para ver el clima.</p>
       )}
+      <WeatherForm city={city} setCity={setCity} fetchWeather={() => fetchWeather(city)}></WeatherForm>
     </div>
   );
 }

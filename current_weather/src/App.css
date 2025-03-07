@@ -1,5 +1,5 @@
 #root {
-  max-width: 100%;
+  width: 100% !important;
   text-align: center;
 }
 
@@ -19,6 +19,8 @@ p {
 .weather{
   display: flex !important;
   flex-direction: column !important;
+  margin: auto;
+  width: 80% !important;
   gap: 10px;
 }
 
@@ -28,8 +30,35 @@ p {
 }
 
 #weatherIcon{
-  align-items: center;
-  justify-content: center;
-  width: 100px;
+  width: 100%;
+  height: 100%;
+}
+
+.mainTitle {
+  margin: 10px;
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 4px 2px 4px black;
+}
+
+.mainContent{
+  margin: auto; 
+  text-align: center; 
+  width: 100%;
+}
+
+.header{
+  background-color: #117A8E;
   height: 100px;
+  display: flex;
+  place-items: center;
+  justify-content: space-between;
+  padding: 5px 20px 5px 20px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+#icon{
+  width: 80px;
+  height: 80px;
 }
