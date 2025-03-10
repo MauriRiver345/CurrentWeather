@@ -8,6 +8,7 @@ export interface Weather {
     };
     current: {
       temp_c: number;
+      feelslike_c: number;
       condition: {
         icon: string;
         text: string;

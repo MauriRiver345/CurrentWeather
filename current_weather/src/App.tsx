@@ -4,6 +4,8 @@ import "./App.css";
 import WeatherForm from "./Modules/weatherForm.tsx";
 import { Weather } from "./Modules/weatherInterface.tsx";
 import MainTable from "./Modules/mainTable.tsx";
+import '@fontsource/montserrat/index.css';
+import '@fontsource/montserrat/700.css';
 
 function App() {
   const [weather, setWeather] = useState<Weather | null>(null);
@@ -39,6 +41,7 @@ function App() {
       });
 
       setWeather(weatherData);
+      console.log(weatherData);
       setLocalDate(formattedDateTime);
     } catch (error) {
       setError("Ciudad no encontrada. Intenta con otra.");
@@ -56,11 +59,12 @@ function App() {
   return (
     <div className="mainContent">
       <div className="header">
-      <p className = "mainTitle">How is the weather in your dream city/country??</p>
+      <p className = "mainTitle">¿Cómo está el clima en tu Ciudad/País soñado??</p>
       <img id = "icon" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/c6023f30971807.563b2b13a55cc.gif" alt="Gif" />
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {loading && <p>Cargando clima...</p>}
+      <h3 id="secondTitle">Información de la ciudad</h3>
       {weather ? (
         <div className="weather">
           <MainTable weather={weather} localDate={localDate}></MainTable>
@@ -68,6 +72,7 @@ function App() {
       ) : (
         <p>Ingresa una ciudad para ver el clima.</p>
       )}
+      <h3 id="secondTitle">Elegir mi ciudad</h3>
       <WeatherForm city={city} setCity={setCity} fetchWeather={() => fetchWeather(city)}></WeatherForm>
     </div>
   );

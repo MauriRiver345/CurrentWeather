@@ -1,5 +1,8 @@
 import React from "react";
-import { Button, TextField, Box, Typography } from "@mui/material";
+import {TextField, Box, Typography } from "@mui/material";
+import "../Styles/weatherForm.css";
+import { Button } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 interface WeatherFormProps {
   city: string;
@@ -14,8 +17,8 @@ const WeatherForm: React.FC<WeatherFormProps> = ({ city, setCity, fetchWeather }
   };
 
   return (
-    <Box sx={{ maxWidth: 400, margin: "auto", textAlign: "center", p: 2 }}>
-      <Typography variant="h5" gutterBottom>🏙️ Seleccionar ciudad</Typography>
+    <Box  className = "divForm" sx={{ maxWidth: 400, textAlign: "center", p: 2 }}>
+      <Typography variant="h5" style={{color:"black"}} gutterBottom>🏙️ Seleccionar ciudad</Typography>
 
       <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 , marginTop: 2}}>
         <TextField
@@ -25,18 +28,18 @@ const WeatherForm: React.FC<WeatherFormProps> = ({ city, setCity, fetchWeather }
           value={city}
           onChange={(e) => setCity(e.target.value)}
           sx={{
-            "& label": { color: "blue" },
-            "& label.Mui-focused": { color: "blue" },
+            "& label": { color: "black" },
+            "& label.Mui-focused": { color: "black" },
             "& .MuiOutlinedInput-root": {
-              "& fieldset": { borderColor: "blue" },
-              "&:hover fieldset": { borderColor: "blue" },
-              "&.Mui-focused fieldset": { borderColor: "blue" },
+              "& fieldset": { borderColor: "black" },
+              "&:hover fieldset": { borderColor: "black" },
+              "&.Mui-focused fieldset": { borderColor: "black" },
             },
-            "& .MuiInputBase-input": { color: "white" },
+            "& .MuiInputBase-input": { color: "black" },
           }}
         />
-        <Button variant="contained" color="primary" type="submit">
-          Buscar
+        <Button id="formButton" variant="contained" color="primary" endIcon={<SendIcon />}>
+          Enviar
         </Button>
       </Box>
     </Box>
