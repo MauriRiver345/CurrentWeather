@@ -9,7 +9,7 @@ interface MainTableProps {
 
 const MainTable: React.FC<MainTableProps> = ({ weather, localDate }) => {
   return (
-    <Card sx={{borderRadius: "10px", backgroundColor: "#B9B9B9"}}>
+    <Card className="contenedorTabla" sx={{borderRadius: "10px", backgroundColor: "#B9B9B9"}}>
       <TableContainer>
         <Table>
           <TableHead id="tableHeader">

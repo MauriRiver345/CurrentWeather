@@ -59,11 +59,13 @@ function App() {
   return (
     <div className="mainContent">
       <div className="header">
-      <p className = "mainTitle">¿Cómo está el clima en tu Ciudad/País soñado??</p>
-      <img id = "icon" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/c6023f30971807.563b2b13a55cc.gif" alt="Gif" />
+      <p className = "mainTitle">¿Cómo está el clima en tu Ciudad/País??</p>
+      <img id = "icon" src="https://th.bing.com/th/id/R.00f6e747fe634f139979659f809c5eef?rik=%2bRy0AbbN4fFLHw&riu=http%3a%2f%2fclipart-library.com%2fimg%2f963492.png&ehk=ucPcYex3Hw13xpXOyb111tV9zblqXxL4oxxE2pj223E%3d&risl=&pid=ImgRaw&r=0" alt="Gif" />
       </div>
+      <div className="mainContainer">
       {error && <p style={{ color: "red" }}>{error}</p>}
       {loading && <p>Cargando clima...</p>}
+      <div className="ciudad">
       <h3 id="secondTitle">Información de la ciudad</h3>
       {weather ? (
         <div className="weather">
@@ -72,8 +74,12 @@ function App() {
       ) : (
         <p>Ingresa una ciudad para ver el clima.</p>
       )}
+      </div>
+      <div className="elegirCiudad">
       <h3 id="secondTitle">Elegir mi ciudad</h3>
       <WeatherForm city={city} setCity={setCity} fetchWeather={() => fetchWeather(city)}></WeatherForm>
+      </div>
+      </div>
     </div>
   );
 }
